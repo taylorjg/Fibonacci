@@ -8,25 +8,25 @@ namespace FibonacciTests
     class FibonacciTests
     {
         [Test]
-        public void TestFibsReturnsTheCorrectFirstTwelveValuesInTheSequence()
+        public void FibsReturnsTheFirst12ValuesCorrectly()
         {
             var fibonacciNumbers = JtEnumerable.Fibs().Take(12);
             Assert.That(fibonacciNumbers, Is.EqualTo(new[] {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}));
         }
 
         [Test]
-        public void TestFibsDoesNotWrapAroundForTheFirstNinetyThreeValuesInTheSequence()
+        public void FibsReturnsTheFirst93ValuesWithoutOverflowing()
         {
             var fibonacciNumbers = JtEnumerable.Fibs().Take(93).ToList();
             Assert.That(fibonacciNumbers, Is.All.GreaterThanOrEqualTo(0));
         }
 
         [Test]
-        public void TestFibsDoesWrapAroundAtTheNinetyFourthValueInTheSequence()
+        public void FibsOverflowsAtThe94ThValue()
         {
-            var fibonacciNumbers = JtEnumerable.Fibs().Take(94).ToList();
-            Assert.That(fibonacciNumbers.Take(93), Is.All.GreaterThanOrEqualTo(0));
-            Assert.That(fibonacciNumbers.ElementAt(93), Is.LessThan(0));
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<System.OverflowException>(() => JtEnumerable.Fibs().Take(94).ToList());
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
     }
 }

@@ -11,13 +11,14 @@ namespace Fibonacci
             var last = 1L;
 
             for (var n = 0L;; n++)
-            {
-                if (n < 2) yield return n;
-                var next = lastButOne + last;
-                lastButOne = last;
-                last = next;
-                yield return next;
-            }
+                checked
+                {
+                    if (n < 2) yield return n;
+                    var next = lastButOne + last;
+                    lastButOne = last;
+                    last = next;
+                    yield return next;
+                }
         }
         // ReSharper restore FunctionNeverReturns
     }
