@@ -15,9 +15,17 @@ namespace FibonacciTests
         }
 
         [Test]
+        public void FibsOverflowsEventually()
+        {
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<System.OverflowException>(() => JtEnumerable.Fibs().Last());
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        }
+
+        [Test]
         public void FibsReturnsTheFirst93ValuesWithoutOverflowing()
         {
-            var fibonacciNumbers = JtEnumerable.Fibs().Take(93).ToList();
+            var fibonacciNumbers = JtEnumerable.Fibs().Take(93);
             Assert.That(fibonacciNumbers, Is.All.GreaterThanOrEqualTo(0));
         }
 
@@ -25,7 +33,7 @@ namespace FibonacciTests
         public void FibsOverflowsAtThe94ThValue()
         {
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<System.OverflowException>(() => JtEnumerable.Fibs().Take(94).ToList());
+            Assert.Throws<System.OverflowException>(() => JtEnumerable.Fibs().Skip(93).First());
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
     }
